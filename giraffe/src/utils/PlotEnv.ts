@@ -1,4 +1,4 @@
-import {getDefaultTable, newTableFromLayerConfig} from './newTable'
+import {getDefaultTable, newTableFromConfig} from './newTable'
 import {getHorizontalTicks, getVerticalTicks} from './getTicks'
 import {getMargins} from './getMargins'
 import {extentOfExtents} from './extrema'
@@ -256,7 +256,7 @@ export class PlotEnv {
     const layerConfig = this.config.layers[layerIndex]
 
     if (!layerConfig.table) {
-      layerConfig.table = newTableFromLayerConfig(layerConfig)
+      layerConfig.table = newTableFromConfig(this.config)
     }
     const table = layerConfig.table
 

@@ -127,15 +127,11 @@ export const newTableFromConfig = (config: Config): Table => {
     return newTable(0)
   }
 
-  // these ifs should be temporary
   if (config.layers && config.layers[0].fluxResponse) {
     return fromFlux(config.layers[0].fluxResponse).table
   }
 
-  if (config.layers && config.layers[0].table) {
-    return getDefaultTable(config)
-  }
-  return newTable(0)
+  return getDefaultTable(config)
 }
 
 export const newTableFromLayerConfig = (
