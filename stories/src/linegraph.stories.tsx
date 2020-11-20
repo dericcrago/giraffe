@@ -4,8 +4,9 @@ import {withKnobs, number, select, boolean, text} from '@storybook/addon-knobs'
 
 import {Config, Plot, timeFormatter, fromFlux} from '../../giraffe/src'
 import {
-  SOLID_GREEN,
   NINETEEN_EIGHTY_FOUR,
+  SOLID_GREEN,
+  SOLID_RED,
 } from '../../giraffe/src/constants/colorSchemes'
 import {getRandomTable} from './data/randomTable'
 
@@ -32,10 +33,16 @@ import {tooltipFalsyValues} from './data/fluxCSV'
 const maxValue = Math.random() * Math.floor(200)
 const maxValue2 = Math.random() * Math.floor(200)
 
+// defining tables outside of .add() calls preserves the shape of the data and graphs
+
+const table = getRandomTable(maxValue)
+
+const baseLayerTable = getRandomTable(maxValue, 40, 20)
+const overlayTable = getRandomTable(maxValue, 20, 20)
+
 storiesOf('Line Graph', module)
   .addDecorator(withKnobs)
   .add('User defined ticks', () => {
-    let table = getRandomTable(maxValue)
     const xTickStart = number('xTickStart', new Date().getTime())
     const xTickStep = number('xTickStep', 200_000)
     const xTotalTicks = number('xTotalTicks', 5)
@@ -186,15 +193,13 @@ storiesOf('Line Graph', module)
     const legendOrientationThreshold = tooltipOrientationThresholdKnob()
     const legendColorizeRows = tooltipColorizeRowsKnob()
 
-    const tableOne = getRandomTable(maxValue)
-    const fillOne = fillKnob(tableOne, ['cpu'])
-    const xOne = xKnob(tableOne)
-    const yOne = yKnob(tableOne)
+    const fillOne = fillKnob(baseLayerTable, ['cpu'])
+    const xOne = xKnob(baseLayerTable)
+    const yOne = yKnob(baseLayerTable)
 
-    const tableTwo = getRandomTable(maxValue, 20, 20)
-    const fillTwo = fillKnob(tableTwo, ['cpu'])
-    const xTwo = xKnob(tableTwo)
-    const yTwo = yKnob(tableTwo)
+    const fillTwo = fillKnob(overlayTable, ['cpu'])
+    const xTwo = xKnob(overlayTable)
+    const yTwo = yKnob(overlayTable)
 
     const colorsOne = colorSchemeKnob(NINETEEN_EIGHTY_FOUR, 'Main Scheme')
     const colorsTwo = colorSchemeKnob(SOLID_GREEN, 'Overlay Scheme')
@@ -216,7 +221,7 @@ storiesOf('Line Graph', module)
       legendColorizeRows,
       layers: [
         {
-          table: tableOne,
+          table: baseLayerTable,
           type: 'line',
           x: xOne,
           y: yOne,
@@ -230,7 +235,7 @@ storiesOf('Line Graph', module)
           shadeBelowOpacity,
         },
         {
-          table: tableTwo,
+          table: overlayTable,
           type: 'line',
           x: xTwo,
           y: yTwo,
@@ -335,7 +340,7 @@ storiesOf('Line Graph', module)
       </PlotContainer>
     )
   })
-/*.add('Custom CSV', () => {
+  .add('Custom CSV', () => {
     const csv = text('Paste CSV here:', '')
     let table = fromFlux(csv).table
     const colors = colorSchemeKnob()
@@ -413,4 +418,4 @@ storiesOf('Line Graph', module)
         <Plot config={config} />
       </PlotContainer>
     )
-  })*/
+  })

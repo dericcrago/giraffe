@@ -84,7 +84,6 @@ storiesOf('Band Chart', module)
     const xTotalTicks = number('xTotalTicks', 20)
 
     const config: Config = {
-      fluxResponse: hoverAlignment3,
       valueFormatters: {
         _time: timeFormatter({timeZone, format: timeFormat}),
         _value: val =>
@@ -107,6 +106,7 @@ storiesOf('Band Chart', module)
       yTickStep,
       layers: [
         {
+          fluxResponse: hoverAlignment3,
           type: 'band',
           x: '_time',
           y: '_value',

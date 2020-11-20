@@ -18,9 +18,8 @@ addParameters({
 })
 
 function loadStories() {
-  require('../src/linegraph.stories.tsx')
-  // const req = require.context('../src', true, /\.stories\.tsx$/)
-  // req.keys().forEach(filename => req(filename))
+  const req = require.context('../src', true, /\.stories\.tsx$/)
+  req.keys().forEach(filename => req(filename))
 }
 
 configure(loadStories, module)
