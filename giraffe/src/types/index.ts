@@ -44,8 +44,6 @@ export interface Config {
   xScale?: string
   yScale?: string
 
-  // table?: Table
-  // fluxResponse?: string
   layers: LayerConfig[]
 
   // The x domain of the plot can be explicitly set. If this option is passed,
@@ -65,7 +63,6 @@ export interface Config {
   onSetYDomain?: (yDomain: number[]) => void
   onResetYDomain?: () => void
 
-  // NEW TYPE: TooltipConfig
   // The legend is the tooltip that appears when hovering over data points
   legendFont?: string
   legendFontColor?: string

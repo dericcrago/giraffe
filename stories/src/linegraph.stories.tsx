@@ -30,6 +30,7 @@ import {
 import {tooltipFalsyValues} from './data/fluxCSV'
 
 const maxValue = Math.random() * Math.floor(200)
+const maxValue2 = Math.random() * Math.floor(200)
 
 storiesOf('Line Graph', module)
   .addDecorator(withKnobs)
@@ -185,15 +186,18 @@ storiesOf('Line Graph', module)
     const legendOrientationThreshold = tooltipOrientationThresholdKnob()
     const legendColorizeRows = tooltipColorizeRowsKnob()
 
-    const tableOne = getRandomTable(65)
+    const tableOne = getRandomTable(maxValue)
     const fillOne = fillKnob(tableOne, ['cpu'])
     const xOne = xKnob(tableOne)
     const yOne = yKnob(tableOne)
 
-    const tableTwo = getRandomTable(85, 20, 20)
+    const tableTwo = getRandomTable(maxValue, 20, 20)
     const fillTwo = fillKnob(tableTwo, ['cpu'])
     const xTwo = xKnob(tableTwo)
     const yTwo = yKnob(tableTwo)
+
+    const colorsOne = colorSchemeKnob(NINETEEN_EIGHTY_FOUR, 'Main Scheme')
+    const colorsTwo = colorSchemeKnob(SOLID_GREEN, 'Overlay Scheme')
 
     const config: Config = {
       valueFormatters: {
@@ -219,7 +223,7 @@ storiesOf('Line Graph', module)
           fill: fillOne,
           position,
           interpolation,
-          colors: colorSchemeKnob(NINETEEN_EIGHTY_FOUR, 'Main Scheme'),
+          colors: colorsOne,
           lineWidth,
           hoverDimension,
           shadeBelow,
@@ -233,7 +237,7 @@ storiesOf('Line Graph', module)
           fill: fillTwo,
           position,
           interpolation,
-          colors: colorSchemeKnob(SOLID_GREEN, 'Overlay Scheme'),
+          colors: colorsTwo,
           lineWidth,
           hoverDimension,
           shadeBelow,
